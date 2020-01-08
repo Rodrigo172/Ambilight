@@ -21,17 +21,11 @@
 
 #define BRIGHTNESS 100        // Max. brightness in %
 
-const char prefix[] = {0x41, 0x64, 0x61, 0x00, 0x70, 0x25};  // Prefix at the start of the transmission
+const char prefix[] = {0x41, 0x64, 0x61, 0x00, 0x70, 0x25};  // Prefix at the start of the transmission Use prefix.txt file to find your own prefix
 char buffer[sizeof(prefix)];                                 // Temporary buffer for receiving the prefix data
 
-// to calculate your prefix, the first 4 bytes will never change: const char prefix[] = {0x41, 0x64, 0x61, 0x00, this never changes.
-// the next byte is equal to the number of LED - 1 --> (113-1)= 112. 112 transformed in HEX. 112 in hex is 70 (use google)
-// the last byte is equal to the XOR value of the calculated value just above and 0x55 (byte just calculated (70) XORED with 0x55) = 25     use this link http://xor.pw/? and in input 1 put 55 and in input 2 put your HEX value.
-
-// some precalculated values to save some time: 178 leds gives B1 and E4, 180 B3E6, 181 B4E1, 182 B5E0 232 E7B2 230 E5B0
-
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(LEDCOUNT, DATAPIN, NEO_GRB + NEO_KHZ800);
-LiquidCrystal_I2C lcd(0x27, 16, 2);                          // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27, 16, 2);                          // set the LCD address to 0x27 or )x20 for a 16 chars and 2 line display depending on your display.
 
 int state;                                                   // Define current state
 #define STATE_WAITING   1                                    // - Waiting for prefix
